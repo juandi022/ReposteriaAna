@@ -6,29 +6,51 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitf6e15f4f63e17e59d73674874fbdd3d2
 {
-    public static $prefixLengthsPsr4 = array (
-        'U' =>
-        array (
-            'Unicah\\ReposteriaAna\\' => 21,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Unicah\\ReposteriaAna\\' =>
-        array (
-            0 => __DIR__ . '/../..' . '/src',
-        ),
+    public static $fallbackDirsPsr4 = array (
+        0 => __DIR__ . '/../..' . '/src',
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Controllers\\Admin\\Admin' => __DIR__ . '/../..' . '/src/Controllers/Admin/Admin.php',
+        'Controllers\\Checkout\\Accept' => __DIR__ . '/../..' . '/src/Controllers/Checkout/Accept.php',
+        'Controllers\\Checkout\\Checkout' => __DIR__ . '/../..' . '/src/Controllers/Checkout/Checkout.php',
+        'Controllers\\Checkout\\Error' => __DIR__ . '/../..' . '/src/Controllers/Checkout/Error.php',
+        'Controllers\\Error' => __DIR__ . '/../..' . '/src/Controllers/Error.php',
+        'Controllers\\IController' => __DIR__ . '/../..' . '/src/Controllers/IController.php',
+        'Controllers\\Index' => __DIR__ . '/../..' . '/src/Controllers/Index.php',
+        'Controllers\\Mnt\\CatalogoList' => __DIR__ . '/../..' . '/src/Controllers/Mnt/CatalogoList.php',
+        'Controllers\\NoAuth' => __DIR__ . '/../..' . '/src/Controllers/NoAuth.php',
+        'Controllers\\PrivateController' => __DIR__ . '/../..' . '/src/Controllers/PrivateController.php',
+        'Controllers\\PrivateNoAuthException' => __DIR__ . '/../..' . '/src/Controllers/PrivateNoAuthException.php',
+        'Controllers\\PrivateNoLoggedException' => __DIR__ . '/../..' . '/src/Controllers/PrivateNoLoggedException.php',
+        'Controllers\\PublicController' => __DIR__ . '/../..' . '/src/Controllers/PublicController.php',
+        'Controllers\\Sec\\Login' => __DIR__ . '/../..' . '/src/Controllers/Sec/Login.php',
+        'Controllers\\Sec\\Logout' => __DIR__ . '/../..' . '/src/Controllers/Sec/Logout.php',
+        'Controllers\\Sec\\Register' => __DIR__ . '/../..' . '/src/Controllers/Sec/Register.php',
+        'Dao\\Dao' => __DIR__ . '/../..' . '/src/Dao/Dao.php',
+        'Dao\\Mantenimiento\\Catalogo' => __DIR__ . '/../..' . '/src/Dao/Mantenimiento/Catalogo.php',
+        'Dao\\Security\\Estados' => __DIR__ . '/../..' . '/src/Dao/Security/Estados.php',
+        'Dao\\Security\\Security' => __DIR__ . '/../..' . '/src/Dao/Security/Security.php',
+        'Dao\\Security\\UsuarioTipo' => __DIR__ . '/../..' . '/src/Dao/Security/UsuarioTipo.php',
+        'Dao\\Table' => __DIR__ . '/../..' . '/src/Dao/Table.php',
+        'Utilities\\ArrUtils' => __DIR__ . '/../..' . '/src/Utilities/ArrUtils.php',
+        'Utilities\\Context' => __DIR__ . '/../..' . '/src/Utilities/Context.php',
+        'Utilities\\DotEnv' => __DIR__ . '/../..' . '/src/Utilities/DotEnv.php',
+        'Utilities\\Enum' => __DIR__ . '/../..' . '/src/Utilities/Enum.php',
+        'Utilities\\Nav' => __DIR__ . '/../..' . '/src/Utilities/Nav.php',
+        'Utilities\\Paging' => __DIR__ . '/../..' . '/src/Utilities/Paging.php',
+        'Utilities\\PixelPay\\PixelPayOrder' => __DIR__ . '/../..' . '/src/Utilities/PixelPay/PixelPayOrder.php',
+        'Utilities\\Security' => __DIR__ . '/../..' . '/src/Utilities/Security.php',
+        'Utilities\\Site' => __DIR__ . '/../..' . '/src/Utilities/Site.php',
+        'Utilities\\Validators' => __DIR__ . '/../..' . '/src/Utilities/Validators.php',
+        'Views\\Renderer' => __DIR__ . '/../..' . '/src/Views/Renderer.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf6e15f4f63e17e59d73674874fbdd3d2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf6e15f4f63e17e59d73674874fbdd3d2::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitf6e15f4f63e17e59d73674874fbdd3d2::$fallbackDirsPsr4;
             $loader->classMap = ComposerStaticInitf6e15f4f63e17e59d73674874fbdd3d2::$classMap;
 
         }, null, ClassLoader::class);

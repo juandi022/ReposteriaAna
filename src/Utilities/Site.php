@@ -8,13 +8,18 @@ class Site
     {
         $donenv = new \Utilities\DotEnv("parameters.env");
         \Utilities\Context::setArrayToContext($donenv->load());
+
+        $baseDir = trim(\Utilities\Context::getContextByKey("BASE_DIR"), "/");
+        \Utilities\Context::setContext("BASE_DIR", $baseDir);
+
         date_default_timezone_set(\Utilities\Context::getContextByKey("TIMEZONE"));
+        \Utilities\Context::setContext('CURRENT_YEAR', date("Y"));
     }
     public static function getPageRequest()
     {
-        $pageRequest = "index";
+        $pageRequest = Context::getContextByKey("PUBLIC_DEFAULT_CONTROLLER");
         if (\Utilities\Security::isLogged()) {
-            $pageRequest = "admin\\admin";
+            $pageRequest = Context::getContextByKey("PRIVATE_DEFAULT_CONTROLLER");
         }
         if (isset($_GET["page"])) {
             $pageRequest = str_replace(array("_", "-", "."), "\\", $_GET["page"]);
@@ -28,16 +33,16 @@ class Site
     {
         if (Context::getContextByKey("USE_URLREWRITE") == "1") {
             header("Location:" . \Views\Renderer::rewriteUrl($url));
-        } else { 
+        } else {
             header("Location:" . $url);
         }
-        
+
         die();
     }
     public static function redirectToWithMsg($url, $msg)
     {
-        echo '<script>alert("'.$msg. '");';
-        echo ' window.location.assign("'.$url.'");</script>';
+        echo '<script>alert("' . $msg . '");';
+        echo ' window.location.assign("' . $url . '");</script>';
         die();
     }
     public static function addLink($href)
@@ -70,5 +75,10 @@ class Site
         }
         \Utilities\Context::setContext("EndScripts", $tmpSrcs);
     }
+    public static function logError($ex, $errorCode)
+    {
+        error_log($ex);
+        \Utilities\Context::setContext("ERROR_CODE", $errorCode);
+        \Utilities\Context::setContext("ERROR_MSG", $ex);
+    }
 }
-?>
