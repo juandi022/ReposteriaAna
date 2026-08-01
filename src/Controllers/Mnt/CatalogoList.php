@@ -51,9 +51,12 @@ class CatalogoList extends PublicController
     if ($this->categoria === "EMP") {
       $this->categoria = "";
     }
-    $this->orderBy = isset($_GET["orderBy"]) && in_array($_GET["orderBy"], ["id_producto", "nombre_producto", "precio", "clear"]) ? $_GET["orderBy"] : $this->orderBy;
+    $this->orderBy = isset($_GET["orderBy"]) && in_array($_GET["orderBy"], ["id_producto", "nombre", "nombre_producto", "precio", "clear"]) ? $_GET["orderBy"] : $this->orderBy;
     if ($this->orderBy === "clear") {
       $this->orderBy = "";
+    }
+    if ($this->orderBy === "nombre_producto") {
+      $this->orderBy = "nombre";
     }
     $this->orderDescending = isset($_GET["orderDescending"]) ? boolval($_GET["orderDescending"]) : $this->orderDescending;
     $this->pageNumber = isset($_GET["pageNum"]) ? intval($_GET["pageNum"]) : $this->pageNumber;

@@ -6,6 +6,7 @@ use Exception;
 use Controllers\PublicController;
 use Views\Renderer;
 use Dao\Mantenimiento\Catalogo as CatalogoDao;
+use ErrorException;
 use Utilities\Site;
 use Utilities\Validators;
 
@@ -44,6 +45,7 @@ class CatalogoForm extends PublicController
             if ($this->isPostBack()) {
                 $validado = $this->validarPostData();
                 if ($validado) {
+                    $this->procesarImagen();
                     $this->procesarPost();
                 }
             }
@@ -53,7 +55,8 @@ class CatalogoForm extends PublicController
             error_log($ex->getMessage());
             Site::redirectToWithMsg(
                 LIST_VIEW_URI,
-                "Algo inesperado ocurrió, vuelva a intentar. Si el error persiste contacte con el administrador."
+                $ex->getMessage()
+                //"Algo inesperado ocurrió, vuelva a intentar. Si el error persiste contacte con el administrador."
             );
         }
     }
@@ -102,13 +105,12 @@ class CatalogoForm extends PublicController
         }
 
         // Seguridad XSS: sanitizar todos los campos de entrada
-        $nombre     = htmlspecialchars(strval($_POST["nombre"] ?? ''), ENT_QUOTES, "UTF-8");
-        $categoria  = htmlspecialchars(strval($_POST["categoria"] ?? ''), ENT_QUOTES, "UTF-8");
+        $nombre      = htmlspecialchars(strval($_POST["nombre"] ?? ''), ENT_QUOTES, "UTF-8");
+        $categoria   = htmlspecialchars(strval($_POST["categoria"] ?? ''), ENT_QUOTES, "UTF-8");
         $descripcion = htmlspecialchars(strval($_POST["descripcion"] ?? ''), ENT_QUOTES, "UTF-8");
-        $precio     = floatval($_POST["precio"] ?? 0);
-        $stock      = intval($_POST["stock"] ?? 0);
-        $imagen     = htmlspecialchars(strval($_POST["imagen"] ?? ''), ENT_QUOTES, "UTF-8");
-        $estado     = htmlspecialchars(strval($_POST["estado"] ?? 'Disponible'), ENT_QUOTES, "UTF-8");
+        $precio      = floatval($_POST["precio"] ?? 0);
+        $stock       = intval($_POST["stock"] ?? 0);
+        $estado      = htmlspecialchars(strval($_POST["estado"] ?? 'Disponible'), ENT_QUOTES, "UTF-8");
 
         if (Validators::IsEmpty($nombre)) {
             $this->addViewError("Campo requiere de un valor", "nombre");
@@ -134,10 +136,51 @@ class CatalogoForm extends PublicController
         $this->producto["descripcion"] = $descripcion;
         $this->producto["precio"]      = $precio;
         $this->producto["stock"]       = $stock;
-        $this->producto["imagen"]      = $imagen;
         $this->producto["estado"]      = $estado;
 
         return count($this->errors) <= 0;
+    }
+
+    /**
+     * Maneja la subida del archivo de imagen (input type="file").
+     * Si no se subió una imagen nueva, conserva la existente (campo oculto imagen_actual).
+     */
+    private function procesarImagen(): void
+    {
+        if ($this->mode === "DEL") {
+            return;
+        }
+
+        $subioArchivo = isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] === UPLOAD_ERR_OK;
+
+        if ($subioArchivo) {
+            $permitidas = ["jpg", "jpeg", "png", "gif", "webp"];
+            $extension  = strtolower(pathinfo($_FILES["imagen"]["name"], PATHINFO_EXTENSION));
+
+            if (!in_array($extension, $permitidas)) {
+                $this->addViewError("Formato de imagen no permitido (use jpg, png, gif o webp)", "imagen");
+                $this->producto["imagen"] = htmlspecialchars(strval($_POST["imagen_actual"] ?? ''), ENT_QUOTES, "UTF-8");
+                return;
+            }
+
+            $carpetaDestino = __DIR__ . "/../../../uploads/catalogo/";
+            if (!is_dir($carpetaDestino)) {
+                mkdir($carpetaDestino, 0755, true);
+            }
+
+            $nombreArchivo = uniqid("prod_") . "." . $extension;
+            $rutaDestino   = $carpetaDestino . $nombreArchivo;
+
+            if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $rutaDestino)) {
+                $this->producto["imagen"] = $nombreArchivo;
+            } else {
+                $this->addViewError("No se pudo guardar la imagen", "imagen");
+                $this->producto["imagen"] = htmlspecialchars(strval($_POST["imagen_actual"] ?? ''), ENT_QUOTES, "UTF-8");
+            }
+        } else {
+            // No subió imagen nueva: conservar la que ya tenía (clave en UPD)
+            $this->producto["imagen"] = htmlspecialchars(strval($_POST["imagen_actual"] ?? ''), ENT_QUOTES, "UTF-8");
+        }
     }
 
     private function procesarPost(): void
@@ -198,6 +241,13 @@ class CatalogoForm extends PublicController
                 $this->producto["nombre"]
             );
         $dataView["producto"] = $this->producto;
+         $dataView["imagen"] = $this->producto["imagen"];
+            $dataView["id_producto"] = $this->producto["id_producto"];
+        $dataView["categorias"] = CatalogoDao::getCategorias();
+        $dataView["categorias"] = array_map(function ($row) {
+            $row["isSelected"] = ($row["categoria"] ?? "") === ($this->producto["categoria"] ?? "");
+            return $row;
+        }, $dataView["categorias"]);
 
         if (count($this->errors)) {
             foreach ($this->errors as $scope => $errors) {

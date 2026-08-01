@@ -14,18 +14,18 @@ class Catalogo extends Table
         int $page = 0,
         int $itemsPerPage = 10
     ) {
-        $sqlstr = "SELECT id_producto, nombre, categoria, descripcion, precio, stock, imagen, estado FROM productos";
-        $sqlstrCount = "SELECT COUNT(*) as count FROM productos";
+        $sqlstr = "SELECT p.id_producto, p.nombre, c.nombre AS categoria, p.descripcion, p.precio, p.stock, p.imagen, p.estado FROM productos p LEFT JOIN categorias c ON p.id_categoria = c.id_categoria";
+        $sqlstrCount = "SELECT COUNT(*) as count FROM productos p LEFT JOIN categorias c ON p.id_categoria = c.id_categoria";
         $conditions = [];
         $params = [];
 
         if ($partialName != "") {
-            $conditions[] = "nombre LIKE :partialName";
+            $conditions[] = "p.nombre LIKE :partialName";
             $params["partialName"] = "%" . $partialName . "%";
         }
 
         if ($categoria != "") {
-            $conditions[] = "categoria = :categoria";
+            $conditions[] = "c.nombre = :categoria";
             $params["categoria"] = $categoria;
         }
 
@@ -69,13 +69,13 @@ class Catalogo extends Table
 
     public static function getCategorias(): array
     {
-        $sqlstr = "SELECT DISTINCT categoria FROM productos ORDER BY categoria ASC";
+        $sqlstr = "SELECT id_categoria, nombre AS categoria FROM categorias ORDER BY nombre ASC";
         return self::obtenerRegistros($sqlstr, []);
     }
 
     public static function getById(int $id): array
     {
-        $sqlstr = "SELECT * FROM productos WHERE id_producto = :id_producto;";
+        $sqlstr = "SELECT p.*, c.nombre AS categoria FROM productos p LEFT JOIN categorias c ON p.id_categoria = c.id_categoria WHERE p.id_producto = :id_producto;";
         return self::obtenerUnRegistro($sqlstr, ["id_producto" => $id]);
     }
 
@@ -88,15 +88,17 @@ class Catalogo extends Table
         string $imagen,
         ?string $estado = null
     ) {
+        $categoriaId = self::getCategoriaIdByNombre($categoria);
+
         if ($estado !== null && $estado !== "") {
             $sqlIns = "insert into productos (
-                nombre, categoria, descripcion, precio, stock, imagen, estado)
+                nombre, id_categoria, descripcion, precio, stock, imagen, estado)
             values
-                ( :nombre, :categoria, :descripcion, :precio, :stock, :imagen, :estado);";
+                ( :nombre, :id_categoria, :descripcion, :precio, :stock, :imagen, :estado);";
 
             $param = [
                 "nombre" => $nombre,
-                "categoria" => $categoria,
+                "id_categoria" => $categoriaId,
                 "descripcion" => $descripcion,
                 "precio" => $precio,
                 "stock" => $stock,
@@ -105,13 +107,13 @@ class Catalogo extends Table
             ];
         } else {
             $sqlIns = "insert into productos (
-                nombre, categoria, descripcion, precio, stock, imagen)
+                nombre, id_categoria, descripcion, precio, stock, imagen)
             values
-                ( :nombre, :categoria, :descripcion, :precio, :stock, :imagen);";
+                ( :nombre, :id_categoria, :descripcion, :precio, :stock, :imagen);";
 
             $param = [
                 "nombre" => $nombre,
-                "categoria" => $categoria,
+                "id_categoria" => $categoriaId,
                 "descripcion" => $descripcion,
                 "precio" => $precio,
                 "stock" => $stock,
@@ -132,15 +134,17 @@ class Catalogo extends Table
         string $imagen,
         string $estado
     ) {
+        $categoriaId = self::getCategoriaIdByNombre($categoria);
+
         $sqlUpd = "update productos set
-            nombre = :nombre, categoria = :categoria,
+            nombre = :nombre, id_categoria = :id_categoria,
             descripcion = :descripcion, precio = :precio,
             stock = :stock, imagen = :imagen, estado = :estado
             where id_producto = :id_producto;";
 
         $param = [
             "nombre" => $nombre,
-            "categoria" => $categoria,
+            "id_categoria" => $categoriaId,
             "descripcion" => $descripcion,
             "precio" => $precio,
             "stock" => $stock,
@@ -150,6 +154,16 @@ class Catalogo extends Table
         ];
 
         return self::executeNonQuery($sqlUpd, $param);
+    }
+
+    private static function getCategoriaIdByNombre(string $categoria): int
+    {
+        $categoriaId = self::obtenerUnRegistro(
+            "SELECT id_categoria FROM categorias WHERE nombre = :categoria LIMIT 1;",
+            ["categoria" => $categoria]
+        );
+
+        return intval($categoriaId["id_categoria"] ?? 0);
     }
 
     public static function delete(int $id)

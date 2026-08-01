@@ -1,14 +1,13 @@
-
 <section>
-    <h2>Catalogo de productos</h2>
+    <h2>Catálogo de productos</h2>
 </section>
-<section class="PRist">
+<section class="WWList">
     <table>
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Categoria</th>
-                <th>Descripcion</th>
+                <th>Categoría</th>
+                <th>Descripción</th>
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Imagen</th>
@@ -18,21 +17,28 @@
             </tr>
         </thead>
         <tbody>
-            {{foreach muebles}}
+            {{foreach productos}}
             <tr>
-                <td>{{tipo_mueble}}</td>
-                <td>{{material}}</td>
-                <td>{{color}}</td>
+                <td>{{nombre}}</td>
+                <td>{{categoria}}</td>
+                <td>{{descripcion}}</td>
                 <td>{{precio}}</td>
-                <td>{{cantidad_stock}}</td>
-                <td>{{imagen_url}}</td>
+                <td>{{stock}}</td>
                 <td>
-                    <a href="index.php?page=Mnt-CatalogoForm&mode=DSP&id_mueble={{id_mueble}}">Mostrar</a><br/>
-                    <a href="index.php?page=Mnt-CatalogoForm&mode=UPD&id_mueble={{id_mueble}}">Editar</a><br/>
-                    <a href="index.php?page=Mnt-CatalogoForm&mode=DEL&id_mueble={{id_mueble}}">Borrar</a>
+                    {{if imagen}}
+                    <img src="uploads/catalogo/{{imagen}}" alt="{{nombre}}" width="60" height="60" style="object-fit: cover; border-radius: 4px;" />
+                    {{endif imagen}}
+                    {{ifnot imagen}}
+                    <span style="color: #999;">Sin imagen</span>
+                    {{endifnot imagen}}
+                </td>
+                <td>
+                    <a href="index.php?page=Mnt-CatalogoForm&mode=DSP&id_producto={{id_producto}}">Mostrar</a><br/>
+                    <a href="index.php?page=Mnt-CatalogoForm&mode=UPD&id_producto={{id_producto}}">Editar</a><br/>
+                    <a href="index.php?page=Mnt-CatalogoForm&mode=DEL&id_producto={{id_producto}}">Borrar</a>
                 </td>
             </tr>
-            {{endfor catalogos}}
+            {{endfor productos}}
         </tbody>
     </table>
 </section>

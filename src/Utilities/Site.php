@@ -8,6 +8,10 @@ class Site
     {
         $donenv = new \Utilities\DotEnv("parameters.env");
         \Utilities\Context::setArrayToContext($donenv->load());
+
+        $baseDir = trim(\Utilities\Context::getContextByKey("BASE_DIR"), "/");
+        \Utilities\Context::setContext("BASE_DIR", $baseDir);
+
         date_default_timezone_set(\Utilities\Context::getContextByKey("TIMEZONE"));
         \Utilities\Context::setContext('CURRENT_YEAR', date("Y"));
     }
