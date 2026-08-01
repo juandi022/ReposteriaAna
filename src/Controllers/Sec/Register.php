@@ -22,6 +22,7 @@ class Register extends PublicController
         if ($this->isPostBack()) {
             $this->txtEmail = $_POST["txtEmail"];
             $this->txtPswd = $_POST["txtPswd"];
+            $this->txtUser = $_POST["txtUser"];
             //validaciones
             if (!(Validators::IsValidEmail($this->txtEmail))) {
                 $this->errorEmail = "El correo no tiene el formato adecuado";
@@ -31,7 +32,7 @@ class Register extends PublicController
                 $this->errorPswd = "La contraseña debe tener al menos 8 caracteres una mayúscula, un número y un caracter especial.";
                 $this->hasErrors = true;
             }
-            if (!Validators::IsEmpty($this->txtUser)) {
+            if (Validators::IsEmpty($this->txtUser)) {
                 $this->errorUser = "El nombre de usuario está vacío, por favor rellenarlo.";
                 $this->hasErrors = true;
             }
