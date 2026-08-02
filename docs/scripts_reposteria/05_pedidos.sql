@@ -2,15 +2,15 @@
 
 CREATE TABLE pedidos (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
-    id_usuario INT NOT NULL,
+    usercod BIGINT(10) NOT NULL,
     id_pago INT NOT NULL,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10,2) NOT NULL,
     estado ENUM('Pendiente','Preparando','Enviado','Entregado','Cancelado') DEFAULT 'Pendiente',
 
     CONSTRAINT fk_pedido_usuario
-        FOREIGN KEY (id_usuario)
-        REFERENCES usuarios(id_usuario),
+        FOREIGN KEY (usercod)
+        REFERENCES usuario(usercod),
 
     CONSTRAINT fk_pedido_pago
         FOREIGN KEY (id_pago)
