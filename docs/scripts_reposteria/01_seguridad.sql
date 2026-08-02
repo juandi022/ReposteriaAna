@@ -90,7 +90,4 @@ INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'C
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuario', 'ACT', '2027-8-1');
 
 INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES ('1', 'ADM', 'ACT', '2026-8-1', '2027-8-1');
-
-drop table funciones_roles;
-
-drop table funciones;
+INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES ('2', 'CLI', 'ACT', '2026-8-1', '2027-8-1');
