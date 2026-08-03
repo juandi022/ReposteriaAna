@@ -24,11 +24,11 @@ class Transacciones extends Table
                 pe.id_pedido AS id_transaccion,
                 pe.fecha,
                 CONVERT(CONCAT('PED-', pe.id_pedido) USING utf8mb4) COLLATE utf8mb4_unicode_ci AS referencia,
-                CONVERT(CONCAT('Pedido de cliente: ', COALESCE(u.nombre, u.correo, 'Sin nombre')) USING utf8mb4) COLLATE utf8mb4_unicode_ci AS descripcion,
+                CONVERT(CONCAT('Pedido de cliente: ', COALESCE(u.username, u.useremail, 'Sin nombre')) USING utf8mb4) COLLATE utf8mb4_unicode_ci AS descripcion,
                 pe.total AS monto,
                 CONVERT(pe.estado USING utf8mb4) COLLATE utf8mb4_unicode_ci AS estado
             FROM pedidos pe
-            LEFT JOIN usuarios u ON pe.id_usuario = u.id_usuario
+            LEFT JOIN usuario u ON pe.usercod = u.usercod
 
             UNION ALL
 
@@ -36,11 +36,11 @@ class Transacciones extends Table
                 pa.id_pago AS id_transaccion,
                 pa.fecha,
                 CONVERT(COALESCE(NULLIF(pa.codigo_transaccion, ''), CONCAT('PAG-', pa.id_pago)) USING utf8mb4) COLLATE utf8mb4_unicode_ci AS referencia,
-                CONVERT(CONCAT('Pago de cliente: ', COALESCE(u.nombre, u.correo, 'Sin nombre')) USING utf8mb4) COLLATE utf8mb4_unicode_ci AS descripcion,
+                CONVERT(CONCAT('Pago de cliente: ', COALESCE(u.username, u.useremail, 'Sin nombre')) USING utf8mb4) COLLATE utf8mb4_unicode_ci AS descripcion,
                 pa.total AS monto,
                 CONVERT(pa.estado USING utf8mb4) COLLATE utf8mb4_unicode_ci AS estado
             FROM pagos pa
-            LEFT JOIN usuarios u ON pa.id_usuario = u.id_usuario";
+            LEFT JOIN usuario u ON pa.usercod = u.usercod";
     }
 
     public static function getTransacciones(
@@ -150,11 +150,11 @@ class Transacciones extends Table
     {
         $sqlstr = "SELECT pe.id_pedido AS id_transaccion, 'PEDIDO' AS tipo,
             pe.fecha, CONCAT('PED-', pe.id_pedido) AS referencia,
-            CONCAT(u.nombre, ' ', u.apellido) AS tercero,
-            '' AS contacto, '' AS telefono, u.correo,
+            u.username AS tercero,
+            '' AS contacto, '' AS telefono, u.useremail AS correo,
             pe.total AS subtotal, 0 AS impuesto, pe.total AS monto, pe.estado
             FROM pedidos pe
-            LEFT JOIN usuarios u ON pe.id_usuario = u.id_usuario
+            LEFT JOIN usuario u ON pe.usercod = u.usercod
             WHERE pe.id_pedido = :id;";
         $encabezado = self::obtenerUnRegistro($sqlstr, ["id" => $id]);
         if (!is_array($encabezado)) {
@@ -177,12 +177,12 @@ class Transacciones extends Table
     {
         $sqlstr = "SELECT pa.id_pago AS id_transaccion, 'PAGO' AS tipo,
             pa.fecha, COALESCE(NULLIF(pa.codigo_transaccion, ''), CONCAT('PAG-', pa.id_pago)) AS referencia,
-            CONCAT(u.nombre, ' ', u.apellido) AS tercero,
-            '' AS contacto, '' AS telefono, u.correo,
+            u.username AS tercero,
+            '' AS contacto, '' AS telefono, u.useremail AS correo,
             pa.total AS subtotal, 0 AS impuesto, pa.total AS monto,
             pa.estado, pa.metodo_pago
             FROM pagos pa
-            LEFT JOIN usuarios u ON pa.id_usuario = u.id_usuario
+            LEFT JOIN usuario u ON pa.usercod = u.usercod
             WHERE pa.id_pago = :id;";
         $encabezado = self::obtenerUnRegistro($sqlstr, ["id" => $id]);
         if (!is_array($encabezado)) {
