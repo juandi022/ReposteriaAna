@@ -12,7 +12,9 @@
                 <th>Stock</th>
                 <th>Imagen</th>
                 <th>
+                    {{ifnot isCliente}}
                     <a href="index.php?page=Mnt-CatalogoForm&mode=INS">Crear</a>
+                    {{endifnot isCliente}}
                 </th>
             </tr>
         </thead>
@@ -33,9 +35,11 @@
                     {{endifnot imagen}}
                 </td>
                 <td>
+                    {{ifnot ~isCliente}}
                     <a href="index.php?page=Mnt-CatalogoForm&mode=DSP&id_producto={{id_producto}}">Mostrar</a><br/>
                     <a href="index.php?page=Mnt-CatalogoForm&mode=UPD&id_producto={{id_producto}}">Editar</a><br/>
                     <a href="index.php?page=Mnt-CatalogoForm&mode=DEL&id_producto={{id_producto}}">Borrar</a>
+                    {{endifnot ~isCliente}}
                 </td>
             </tr>
             {{endfor productos}}
