@@ -97,9 +97,9 @@ class CatalogoList extends PublicController
     $this->viewData["productosCount"] = $this->productosCount;
     $this->viewData["pages"] = $this->pages;
     $this->viewData["productos"] = $this->productos;
-    $this->viewData["puedeGestionar"] = \Utilities\Security::isAuthorized(
+    $this->viewData["isCliente"] = \Utilities\Security::isInRol(
         \Utilities\Security::getUserId(),
-        "Controllers\Mnt\CatalogoForm"
+        "CLI"
     );
     if ($this->orderBy !== "") {
       $orderByKey = "Order" . ucfirst($this->orderBy);
