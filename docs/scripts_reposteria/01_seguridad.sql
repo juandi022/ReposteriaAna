@@ -65,3 +65,29 @@ CREATE TABLE `bitacora` (
   `bitusuario` bigint(18) DEFAULT NULL,
   PRIMARY KEY (`bitacoracod`)
 )
+
+INSERT INTO roles (rolescod, rolesdsc, rolesest) VALUES ('ADM', 'Administrador', 'ACT');
+INSERT INTO roles (rolescod, rolesdsc, rolesest) VALUES ('CLI', 'Cliente', 'ACT');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CatalogoList', 'Detalle de Productos', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CatalogoForm', 'Detalle de Productos', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Funciones\\Funciones', 'Lista de Funciones', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Funciones\\Funcion', 'Detalle de Funciones', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\FuncionesRoles\\FuncionesRoles', 'Lista de FuncionesRoles', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\FuncionesRoles\\FuncionRol', 'Detalle de FuncionesRoles', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Roles\\Roles', 'Lista de Roles', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Roles\\Rol', 'Detalle de Roles', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuarios', 'Lista de Usuarios', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuario', 'Detalle de Roles', 'ACT', 'FNC');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoForm', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funciones', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funcion', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionesRoles', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionRol', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Roles', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Rol', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuarios', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuario', 'ACT', '2027-8-1');
+
+INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES ('1', 'ADM', 'ACT', '2026-8-1', '2027-8-1');
+INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES ('2', 'CLI', 'ACT', '2026-8-1', '2027-8-1');

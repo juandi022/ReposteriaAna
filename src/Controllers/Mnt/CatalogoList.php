@@ -2,13 +2,13 @@
 
 namespace Controllers\Mnt;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Utilities\Context;
 use Utilities\Paging;
 use Dao\Mantenimiento\Catalogo as CatalogoDao;
 use Views\Renderer;
 
-class CatalogoList extends PublicController
+class CatalogoList extends PrivateController
 {
   private $partialName = "";
   private $categoria = "";

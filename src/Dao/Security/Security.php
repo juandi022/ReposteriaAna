@@ -55,7 +55,7 @@ class Security extends \Dao\Table
         if (!\Utilities\Validators::IsValidPassword($password)) {
             throw new Exception("Contraseña debe ser almenos 8 caracteres, 1 número, 1 mayúscula, 1 símbolo especial");
         }
-        if (!\Utilities\Validators::IsEmpty($username)) {
+        if (\Utilities\Validators::IsEmpty($username)) {
             throw new Exception("El nombre de usuario está vacío, por favor rellenarlo.");
         }
 
