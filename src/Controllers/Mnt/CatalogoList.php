@@ -2,13 +2,13 @@
 
 namespace Controllers\Mnt;
 
-use Controllers\PrivateController;
+use Controllers\PublicController;
 use Utilities\Context;
 use Utilities\Paging;
 use Dao\Mantenimiento\Catalogo as CatalogoDao;
 use Views\Renderer;
 
-class CatalogoList extends PrivateController
+class CatalogoList extends PublicController
 {
   private $partialName = "";
   private $categoria = "";
@@ -97,6 +97,10 @@ class CatalogoList extends PrivateController
     $this->viewData["productosCount"] = $this->productosCount;
     $this->viewData["pages"] = $this->pages;
     $this->viewData["productos"] = $this->productos;
+    $this->viewData["puedeGestionar"] = \Utilities\Security::isAuthorized(
+        \Utilities\Security::getUserId(),
+        "Controllers\Mnt\CatalogoForm"
+    );
     if ($this->orderBy !== "") {
       $orderByKey = "Order" . ucfirst($this->orderBy);
       $orderByKeyNoOrder = "OrderBy" . ucfirst($this->orderBy);
