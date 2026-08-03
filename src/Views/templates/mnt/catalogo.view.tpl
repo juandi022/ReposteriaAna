@@ -33,6 +33,7 @@
                     {{endifnot imagen}}
                 </td>
                 <td>
+                    <a class="btn" href="index.php?page=Mnt-CarritoForm&mode=INS&id_producto={{id_producto}}"><i class="fa-solid fa-cart-plus"></i>&nbsp;Añadir</a><br/>
                     <a href="index.php?page=Mnt-CatalogoForm&mode=DSP&id_producto={{id_producto}}">Mostrar</a><br/>
                     <a href="index.php?page=Mnt-CatalogoForm&mode=UPD&id_producto={{id_producto}}">Editar</a><br/>
                     <a href="index.php?page=Mnt-CatalogoForm&mode=DEL&id_producto={{id_producto}}">Borrar</a>

@@ -70,6 +70,8 @@ INSERT INTO roles (rolescod, rolesdsc, rolesest) VALUES ('ADM', 'Administrador',
 INSERT INTO roles (rolescod, rolesdsc, rolesest) VALUES ('CLI', 'Cliente', 'ACT');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CatalogoList', 'Detalle de Productos', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CatalogoForm', 'Detalle de Productos', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CarritoList', 'Lista del Carrito', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CarritoForm', 'Detalle del Carrito', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Funciones\\Funciones', 'Lista de Funciones', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Funciones\\Funcion', 'Detalle de Funciones', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\FuncionesRoles\\FuncionesRoles', 'Lista de FuncionesRoles', 'ACT', 'FNC');
@@ -80,6 +82,8 @@ INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuario
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuario', 'Detalle de Roles', 'ACT', 'FNC');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2027-8-1');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoForm', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CarritoList', 'ACT', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CarritoForm', 'ACT', '2027-8-1');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funciones', 'ACT', '2027-8-1');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funcion', 'ACT', '2027-8-1');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionesRoles', 'ACT', '2027-8-1');
