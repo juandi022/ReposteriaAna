@@ -2,7 +2,7 @@
 
 namespace Controllers\Compras;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Compras\Proveedores as ProveedoresDao;
 use Exception;
 use Utilities\Site;
@@ -13,7 +13,7 @@ const PROVEEDOR_FORM_VIEW_URI = "index.php?page=Compras-ProveedorForm";
 const PROVEEDOR_FORM_TEMPLATE = "compras/proveedor_form";
 const PROVEEDOR_FORM_XSS_TOKEN = "proveedor_form";
 
-class ProveedorForm extends PublicController
+class ProveedorForm extends PrivateController
 {
     private string $mode = "NAS";
     private array $modes = [

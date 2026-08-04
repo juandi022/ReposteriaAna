@@ -2,12 +2,12 @@
 
 namespace Controllers\Compras;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Utilities\Context;
 use Dao\Compras\Proveedores as ProveedoresDao;
 use Views\Renderer;
 
-class ProveedoresList extends PublicController
+class ProveedoresList extends PrivateController
 {
     private $partialName = "";
     private $estado = "";

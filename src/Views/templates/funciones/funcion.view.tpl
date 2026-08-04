@@ -7,7 +7,6 @@
     <div class="row my-2 align-center">
       <label class="col-12 col-m-3" for="fncod">Código</label>
       <input class="col-12 col-m-9" {{~readonly}} type="text" name="fncod" id="fncod" placehoder="Código" value="{{fncod}}" />
-      <input type="hidden" name="fncod" value="{{fncod}}" />
       <input type="hidden" name="mode" value="{{~mode}}" />
       <input type="hidden" name="userCod" value="{{fncod}}" />
       <input type="hidden" name="token" value="{{~funciones_xss_token}}" />
