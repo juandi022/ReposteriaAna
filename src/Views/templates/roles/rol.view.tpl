@@ -7,7 +7,6 @@
     <div class="row my-2 align-center">
       <label class="col-12 col-m-3" for="rolescod">Código</label>
       <input class="col-12 col-m-9" {{~readonly}} type="text" name="rolescod" id="rolescod" placehoder="Código" value="{{rolescod}}" />
-      <input type="hidden" name="rolescod" value="{{rolescod}}" />
       <input type="hidden" name="mode" value="{{~mode}}" />
       <input type="hidden" name="userCod" value="{{rolescod}}" />
       <input type="hidden" name="token" value="{{~roles_xss_token}}" />
