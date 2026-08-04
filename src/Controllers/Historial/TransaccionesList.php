@@ -2,12 +2,12 @@
 
 namespace Controllers\Historial;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Historial\Transacciones as TransaccionesDao;
 use Utilities\Context;
 use Views\Renderer;
 
-class TransaccionesList extends PublicController
+class TransaccionesList extends PrivateController
 {
     private $tipo = "";
     private $estado = "";

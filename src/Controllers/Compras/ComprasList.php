@@ -2,12 +2,12 @@
 
 namespace Controllers\Compras;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Utilities\Context;
 use Dao\Compras\Compras as ComprasDao;
 use Views\Renderer;
 
-class ComprasList extends PublicController
+class ComprasList extends PrivateController
 {
     private $partialFactura = "";
     private $estado = "";

@@ -2,7 +2,7 @@
 
 namespace Controllers\Compras;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Compras\Compras as ComprasDao;
 use Dao\Compras\Proveedores as ProveedoresDao;
 use Exception;
@@ -14,7 +14,7 @@ const COMPRA_FORM_VIEW_URI = "index.php?page=Compras-CompraForm";
 const COMPRA_FORM_TEMPLATE = "compras/compra_form";
 const COMPRA_FORM_XSS_TOKEN = "compra_form";
 
-class CompraForm extends PublicController
+class CompraForm extends PrivateController
 {
     private string $mode = "NAS";
     private array $modes = [

@@ -2,7 +2,7 @@
 
 namespace Controllers\Historial;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Dao\Historial\Transacciones as TransaccionesDao;
 use Exception;
 use Utilities\Site;
@@ -10,7 +10,7 @@ use Views\Renderer;
 
 const HISTORIAL_LIST_VIEW_URI = "index.php?page=Historial-TransaccionesList";
 
-class TransaccionDetalle extends PublicController
+class TransaccionDetalle extends PrivateController
 {
     private string $tipo = "";
     private int $idTransaccion = 0;
