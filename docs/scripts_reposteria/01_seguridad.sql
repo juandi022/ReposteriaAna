@@ -1,4 +1,5 @@
-use reposteria;
+USE reposteria;
+
 CREATE TABLE `usuario` (
   `usercod` bigint(10) NOT NULL AUTO_INCREMENT,
   `useremail` varchar(80) DEFAULT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE `roles` (
   `rolesdsc` varchar(45) DEFAULT NULL,
   `rolesest` char(3) DEFAULT NULL,
   PRIMARY KEY (`rolescod`)
-) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `roles_usuarios` (
   `usercod` bigint(10) NOT NULL,
@@ -31,9 +32,13 @@ CREATE TABLE `roles_usuarios` (
   `roleuserexp` datetime DEFAULT NULL,
   PRIMARY KEY (`usercod`,`rolescod`),
   KEY `rol_usuario_key_idx` (`rolescod`),
-  CONSTRAINT `rol_usuario_key` FOREIGN KEY (`rolescod`) REFERENCES `roles` (`rolescod`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `usuario_rol_key` FOREIGN KEY (`usercod`) REFERENCES `usuario` (`usercod`) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
+  CONSTRAINT `rol_usuario_key`
+    FOREIGN KEY (`rolescod`) REFERENCES `roles` (`rolescod`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `usuario_rol_key`
+    FOREIGN KEY (`usercod`) REFERENCES `usuario` (`usercod`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `funciones` (
   `fncod` varchar(255) NOT NULL,
@@ -41,7 +46,7 @@ CREATE TABLE `funciones` (
   `fnest` char(3) DEFAULT NULL,
   `fntyp` char(3) DEFAULT NULL,
   PRIMARY KEY (`fncod`)
-) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `funciones_roles` (
   `rolescod` varchar(15) NOT NULL,
@@ -50,10 +55,13 @@ CREATE TABLE `funciones_roles` (
   `fnexp` datetime DEFAULT NULL,
   PRIMARY KEY (`rolescod`,`fncod`),
   KEY `rol_funcion_key_idx` (`fncod`),
-  CONSTRAINT `funcion_rol_key` FOREIGN KEY (`rolescod`) REFERENCES `roles` (`rolescod`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `rol_funcion_key` FOREIGN KEY (`fncod`) REFERENCES `funciones` (`fncod`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) 
-
+  CONSTRAINT `funcion_rol_key`
+    FOREIGN KEY (`rolescod`) REFERENCES `roles` (`rolescod`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `rol_funcion_key`
+    FOREIGN KEY (`fncod`) REFERENCES `funciones` (`fncod`)
+    ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `bitacora` (
   `bitacoracod` int(11) NOT NULL AUTO_INCREMENT,
@@ -64,10 +72,11 @@ CREATE TABLE `bitacora` (
   `bitTipo` char(3) DEFAULT NULL,
   `bitusuario` bigint(18) DEFAULT NULL,
   PRIMARY KEY (`bitacoracod`)
-)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO roles (rolescod, rolesdsc, rolesest) VALUES ('ADM', 'Administrador', 'ACT');
 INSERT INTO roles (rolescod, rolesdsc, rolesest) VALUES ('CLI', 'Cliente', 'ACT');
+
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CatalogoList', 'Detalle de Productos', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Mnt\\CatalogoForm', 'Detalle de Productos', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Funciones\\Funciones', 'Lista de Funciones', 'ACT', 'FNC');
@@ -78,18 +87,23 @@ INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Roles\\
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Roles\\Rol', 'Detalle de Roles', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuarios', 'Lista de Usuarios', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuario', 'Detalle de Roles', 'ACT', 'FNC');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoForm', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funciones', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funcion', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionesRoles', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionRol', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Roles', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Rol', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuarios', 'ACT', '2027-8-1');
-INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuario', 'ACT', '2027-8-1');
 
-INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES ('1', 'ADM', 'ACT', '2026-8-1', '2027-8-1');
-INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp) VALUES ('2', 'CLI', 'ACT', '2026-8-1', '2027-8-1');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoForm', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funciones', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Funciones\\Funcion', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionesRoles', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\FuncionesRoles\\FuncionRol', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Roles', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Rol', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuarios', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuario', 'ACT', '2027-08-01');
 
-INSERT INTO `funciones_roles` (`rolescod`, `fncod`, `fnrolest`, `fnexp`) VALUES ('CLI', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2031-08-03 20:31:37');
+INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp)
+VALUES (1, 'ADM', 'ACT', '2026-08-01', '2027-08-01');
+
+INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp)
+VALUES (2, 'CLI', 'ACT', '2026-08-01', '2027-08-01');
+
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp)
+VALUES ('CLI', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2031-08-03 20:31:37');
