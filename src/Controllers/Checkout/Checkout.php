@@ -67,10 +67,16 @@ class Checkout extends PublicController
                 );
             }
 
+            $scheme = (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off")
+                ? "https"
+                : "http";
+            $baseUrl = $scheme . "://" . $_SERVER["HTTP_HOST"]
+                . "/" . \Utilities\Context::getContextByKey("BASE_DIR");
+
             $PayPalOrder = new \Utilities\Paypal\PayPalOrder(
                 "PAGO_" . $idPago,
-                "http://localhost:8080//ReposteriaAna-main/index.php?page=Checkout-Error&idPago=" . $idPago,
-                "http://localhost:8080//ReposteriaAna-main/index.php?page=Checkout-Accept&idPago=" . $idPago
+                $baseUrl . "/index.php?page=Checkout-Error&idPago=" . $idPago,
+                $baseUrl . "/index.php?page=Checkout-Accept&idPago=" . $idPago
             );
 
             foreach ($detalle as $item) {

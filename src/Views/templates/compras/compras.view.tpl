@@ -50,10 +50,8 @@
                 <td>{{estado}}</td>
                 <td>
                     <a href="index.php?page=Compras-CompraForm&mode=DSP&id_compra={{id_compra}}">Mostrar</a><br/>
-                    {{if esBorrador}}
                     <a href="index.php?page=Compras-CompraForm&mode=UPD&id_compra={{id_compra}}">Editar</a><br/>
                     <a href="index.php?page=Compras-CompraForm&mode=DEL&id_compra={{id_compra}}">Borrar</a>
-                    {{endif esBorrador}}
                 </td>
             </tr>
             {{endfor compras}}

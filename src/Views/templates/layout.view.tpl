@@ -13,8 +13,7 @@
   <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/home.css">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
   {{foreach SiteLinks}}
   <link rel="stylesheet" href="/{{~BASE_DIR}}/{{this}}">
@@ -40,8 +39,7 @@
 
     <h1 class="site-logo">
         <a href="index.php?page=Index">
-            <img src="/ReposteriaAna-main/uploads/Inicio/logorepo.png"
-                 alt="Repostería Ana">
+            <img src="/{{BASE_DIR}}/uploads/Inicio/logorepo.png" alt="Repostería Ana">
         </a>
     </h1>
 

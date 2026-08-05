@@ -23,7 +23,7 @@
     </div>
     <div class="row my-2 align-center">
       <label class="col-12 col-m-3" for="username">Usuario</label>
-      <input type="text" class="col-12 col-m-9"  {{~readonly}} name="username" id="username" placehoder="Descripción del Producto" value="{{username}}"/>
+      <input type="text" class="col-12 col-m-9" {{~readonly}} name="username" id="username" placehoder="Descripción del Producto" value="{{username}}"/>
       {{if username_error}}
       <div class="col-12 col-m-9 offset-m-3 error">
         {{username_error}}
