@@ -55,6 +55,39 @@ class Login extends \Controllers\PublicController
                             $dbUser["username"],
                             $dbUser["useremail"]
                         );
+
+                        if (isset($_SESSION["carrito"]) && count($_SESSION["carrito"]) > 0) {
+
+    $carrito = \Dao\Mantenimiento\Carrito::getOrCreateCarrito($dbUser["usercod"]);
+
+    foreach ($_SESSION["carrito"] as $item) {
+
+        $detalle = \Dao\Mantenimiento\Carrito::getDetalleProducto(
+            intval($carrito["id_carrito"]),
+            intval($item["id_producto"])
+        );
+
+        if (empty($detalle)) {
+
+            \Dao\Mantenimiento\Carrito::addProducto(
+                intval($carrito["id_carrito"]),
+                intval($item["id_producto"]),
+                intval($item["cantidad"]),
+                floatval($item["precio"])
+            );
+
+        } else {
+
+            \Dao\Mantenimiento\Carrito::updateCantidad(
+                intval($detalle["id_detalle_carrito"]),
+                intval($detalle["cantidad"]) + intval($item["cantidad"])
+            );
+        }
+    }
+
+    unset($_SESSION["carrito"]);
+}
+
                         if (\Utilities\Context::getContextByKey("redirto") !== "") {
                             \Utilities\Site::redirectTo(
                                 \Utilities\Context::getContextByKey("redirto")

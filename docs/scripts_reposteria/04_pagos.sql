@@ -11,3 +11,14 @@ CREATE TABLE pagos (
         FOREIGN KEY (usercod)
         REFERENCES usuario(usercod)
 );
+
+CREATE TABLE detalle_pago (
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_pago INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio DECIMAL(10,2) NOT NULL,
+
+    FOREIGN KEY (id_pago) REFERENCES pagos(id_pago),
+    FOREIGN KEY (id_producto) REFERENCES productos(id_producto)
+);

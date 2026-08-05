@@ -1,4 +1,3 @@
---PEDIDOS
 
 CREATE TABLE pedidos (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,7 +16,6 @@ CREATE TABLE pedidos (
         REFERENCES pagos(id_pago)
 );
 
---DETALLE PEDIDO
 
 CREATE TABLE detalle_pedido (
     id_detalle_pedido INT AUTO_INCREMENT PRIMARY KEY,

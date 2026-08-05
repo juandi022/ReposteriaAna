@@ -4,7 +4,7 @@ namespace Controllers\Mnt;
 
 use Controllers\PublicController;
 use Dao\Mantenimiento\Carrito as CarritoDao;
-use Utilities\Carrito as CarritoSession;
+use Utilities\Security;
 use Utilities\Site;
 use Views\Renderer;
 
@@ -21,6 +21,8 @@ class CarritoForm extends PublicController
     ];
 
     private array $item = [
+        "id_detalle_carrito" => 0,
+        "id_carrito" => 0,
         "id_producto" => 0,
         "nombre_producto" => "",
         "cantidad" => 1,
@@ -34,53 +36,107 @@ class CarritoForm extends PublicController
     private string $xssToken = "";
 
     public function run(): void
-    {
-        try {
-            $this->getQueryParams();
-            if ($this->isPostBack()) {
-                if ($this->validarPostData()) {
-                    $this->procesarPost();
-                }
+{
+    try {
+
+        $this->getQueryParams();
+
+        if ($this->isPostBack()) {
+            if ($this->validarPostData()) {
+                $this->procesarPost();
             }
-            $this->mostrarVista();
-        } catch (\Exception $ex) {
-            error_log($ex->getMessage());
-            Site::redirectToWithMsg(CARRITO_LIST_URI, $ex->getMessage());
         }
+
+        $this->mostrarVista();
+
+    } catch (\Exception $ex) {
+
+        error_log($ex->getMessage());
+        Site::redirectToWithMsg(CARRITO_LIST_URI, $ex->getMessage());
+
+    }
+}
+
+private function getQueryParams(): void
+{
+    $this->mode = $_GET["mode"] ?? "INS";
+
+    if (!isset($this->modes[$this->mode])) {
+        throw new \Exception("Modo no adecuado");
     }
 
-    private function getQueryParams(): void
-    {
-        $this->mode = $_GET["mode"] ?? "INS";
-        if (!isset($this->modes[$this->mode])) {
-            throw new \Exception("Modo no adecuado");
+    if ($this->mode === "DEL") {
+
+        $this->item["id_detalle_carrito"] = intval($_GET["id_detalle_carrito"] ?? 0);
+
+        if ($this->item["id_detalle_carrito"] === 0) {
+            throw new \Exception("ID de detalle es inválido.");
         }
 
-        $this->item["id_producto"] = intval($_GET["id_producto"] ?? 0);
-        if ($this->item["id_producto"] === 0) {
-            throw new \Exception("ID de producto es inválido.");
-        }
-        $producto = CarritoDao::getProductoById($this->item["id_producto"]);
-        if (empty($producto)) {
-            throw new \Exception("Producto no encontrado.");
-        }
-        $this->item["nombre_producto"] = $producto["nombre"];
-        $this->item["precio"] = floatval($producto["precio"]);
-        $this->item["cantidadEnCarrito"] = CarritoSession::cantidadEnCarrito($this->item["id_producto"]);
+        $detalle = CarritoDao::getDetalleById($this->item["id_detalle_carrito"]);
 
-        if ($this->mode === "DEL") {
-            $this->item["cantidad"] = $this->item["cantidadEnCarrito"];
-            return;
+        if (empty($detalle)) {
+            throw new \Exception("Detalle de carrito no encontrado.");
         }
 
-        $this->item["stock"] = intval($producto["stock"]);
-        $this->item["cantidad"] = 1;
-        $this->item["disponible"] = $this->item["stock"] - $this->item["cantidadEnCarrito"];
-        if ($this->item["disponible"] < 0) {
-            $this->item["disponible"] = 0;
-        }
+        $this->item["id_carrito"] = intval($detalle["id_carrito"]);
+        $this->item["id_producto"] = intval($detalle["id_producto"]);
+        $this->item["nombre_producto"] = $detalle["nombre_producto"];
+        $this->item["cantidad"] = intval($detalle["cantidad"]);
+        $this->item["precio"] = floatval($detalle["precio"]);
+
+        return;
     }
 
+    $this->item["id_producto"] = intval($_GET["id_producto"] ?? 0);
+
+    if ($this->item["id_producto"] === 0) {
+        throw new \Exception("ID de producto es inválido.");
+    }
+
+    $producto = CarritoDao::getProductoById($this->item["id_producto"]);
+
+    if (empty($producto)) {
+        throw new \Exception("Producto no encontrado.");
+    }
+
+    $this->item["nombre_producto"] = $producto["nombre"];
+    $this->item["precio"] = floatval($producto["precio"]);
+    $this->item["stock"] = intval($producto["stock"]);
+
+    // ==============================
+    // SOLO SI EL USUARIO ESTÁ LOGUEADO
+    // ==============================
+
+    if (Security::isLogged()) {
+
+        $carrito = CarritoDao::getOrCreateCarrito(Security::getUserId());
+
+        $this->item["id_carrito"] = intval($carrito["id_carrito"] ?? 0);
+
+        $detalle = CarritoDao::getDetalleProducto(
+            $this->item["id_carrito"],
+            $this->item["id_producto"]
+        );
+
+        $this->item["cantidadEnCarrito"] = intval($detalle["cantidad"] ?? 0);
+
+    } else {
+
+        $this->item["id_carrito"] = 0;
+        $this->item["cantidadEnCarrito"] = 0;
+
+    }
+
+    $this->item["cantidad"] = 1;
+
+    $this->item["disponible"] =
+        $this->item["stock"] - $this->item["cantidadEnCarrito"];
+
+    if ($this->item["disponible"] < 0) {
+        $this->item["disponible"] = 0;
+    }
+}
     private function validarPostData(): bool
     {
         $tmp_mode = $_POST["mode"] ?? 'NAP';
@@ -95,13 +151,17 @@ class CarritoForm extends PublicController
             throw new \Exception("No paso la prueba de XSS Script Forgery");
         }
 
+        if ($this->mode === "DEL") {
+            $this->item["id_detalle_carrito"] = intval($_POST["id_detalle_carrito"] ?? 0);
+            if ($this->item["id_detalle_carrito"] === 0) {
+                throw new \Exception("ID de detalle es inválido.");
+            }
+            return true;
+        }
+
         $this->item["id_producto"] = intval($_POST["id_producto"] ?? 0);
         if ($this->item["id_producto"] === 0) {
             throw new \Exception("ID de producto es inválido.");
-        }
-
-        if ($this->mode === "DEL") {
-            return true;
         }
 
         $cantidad = intval($_POST["cantidad"] ?? 0);
@@ -126,28 +186,112 @@ class CarritoForm extends PublicController
     }
 
     private function procesarPost(): void
-    {
-        switch ($this->mode) {
-            case "INS":
-                $producto = CarritoDao::getProductoById($this->item["id_producto"]);
-                if (empty($producto)) {
-                    throw new \Exception("Producto no encontrado.");
+{
+    switch ($this->mode) {
+
+        case "INS":
+
+            // Usuario invitado
+            if (!Security::isLogged()) {
+
+                if (!isset($_SESSION["carrito"])) {
+                    $_SESSION["carrito"] = [];
                 }
-                CarritoSession::agregar(
-                    $this->item["id_producto"],
-                    $producto["nombre"],
-                    floatval($producto["precio"]),
-                    intval($producto["stock"]),
-                    $this->item["cantidad"]
+
+                $idProducto = $this->item["id_producto"];
+
+                if (isset($_SESSION["carrito"][$idProducto])) {
+
+                    $_SESSION["carrito"][$idProducto]["cantidad"] += $this->item["cantidad"];
+
+                } else {
+
+                    $_SESSION["carrito"][$idProducto] = [
+                        "id_producto" => $this->item["id_producto"],
+                        "nombre_producto" => $this->item["nombre_producto"],
+                        "precio" => $this->item["precio"],
+                        "cantidad" => $this->item["cantidad"]
+                    ];
+                }
+
+                Site::redirectToWithMsg(
+                    CARRITO_LIST_URI,
+                    "Producto agregado al carrito satisfactoriamente!"
                 );
-                Site::redirectToWithMsg(CARRITO_LIST_URI, "Producto agregado al carrito satisfactoriamente!");
-                break;
-            case "DEL":
-                CarritoSession::eliminar($this->item["id_producto"]);
-                Site::redirectToWithMsg(CARRITO_LIST_URI, "Producto eliminado del carrito satisfactoriamente!");
-                break;
-        }
+                return;
+            }
+
+            // Usuario logueado
+            $carrito = CarritoDao::getOrCreateCarrito(Security::getUserId());
+
+            $this->item["id_carrito"] = intval($carrito["id_carrito"] ?? 0);
+
+            $detalle = CarritoDao::getDetalleProducto(
+                $this->item["id_carrito"],
+                $this->item["id_producto"]
+            );
+
+            if (empty($detalle)) {
+
+                if (CarritoDao::addProducto(
+                    $this->item["id_carrito"],
+                    $this->item["id_producto"],
+                    $this->item["cantidad"],
+                    $this->item["precio"]
+                )) {
+
+                    Site::redirectToWithMsg(
+                        CARRITO_LIST_URI,
+                        "Producto agregado al carrito satisfactoriamente!"
+                    );
+
+                } else {
+
+                    $this->addViewError("No se pudo agregar el producto al carrito");
+
+                }
+
+            } else {
+
+                $nuevaCantidad = intval($detalle["cantidad"]) + $this->item["cantidad"];
+
+                if (CarritoDao::updateCantidad(
+                    intval($detalle["id_detalle_carrito"]),
+                    $nuevaCantidad
+                )) {
+
+                    Site::redirectToWithMsg(
+                        CARRITO_LIST_URI,
+                        "Cantidad actualizada en el carrito satisfactoriamente!"
+                    );
+
+                } else {
+
+                    $this->addViewError("No se pudo actualizar la cantidad en el carrito");
+
+                }
+            }
+
+            break;
+
+        case "DEL":
+
+            if (CarritoDao::removeDetalle($this->item["id_detalle_carrito"])) {
+
+                Site::redirectToWithMsg(
+                    CARRITO_LIST_URI,
+                    "Producto eliminado del carrito satisfactoriamente!"
+                );
+
+            } else {
+
+                $this->addViewError("No se pudo eliminar el producto del carrito");
+
+            }
+
+            break;
     }
+}
 
     private function mostrarVista(): void
     {
@@ -156,6 +300,7 @@ class CarritoForm extends PublicController
         $dataView["modeDsc"] = $this->modes[$this->mode];
         $dataView["modoAgregar"] = ($this->mode === "INS");
         $dataView["id_producto"] = $this->item["id_producto"];
+        $dataView["id_detalle_carrito"] = $this->item["id_detalle_carrito"];
         $dataView["nombre_producto"] = $this->item["nombre_producto"];
         $dataView["precio"] = $this->item["precio"];
         $dataView["cantidad"] = $this->item["cantidad"];

@@ -8,46 +8,95 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/appstyle.css" />
-  <script src="https://kit.fontawesome.com/{{FONT_AWESOME_KIT}}.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/{{BASE_DIR}}/public/css/home.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   {{foreach SiteLinks}}
   <link rel="stylesheet" href="/{{~BASE_DIR}}/{{this}}" />
   {{endfor SiteLinks}}
+
   {{foreach BeginScripts}}
   <script src="/{{~BASE_DIR}}/{{this}}"></script>
   {{endfor BeginScripts}}
 </head>
 
 <body>
-  <header>
-    <input type="checkbox" class="menu_toggle" id="menu_toggle" />
-    <label for="menu_toggle" class="menu_toggle_icon">
-      <div class="hmb dgn pt-1"></div>
-      <div class="hmb hrz"></div>
-      <div class="hmb dgn pt-2"></div>
-    </label>
-    <h1>{{SITE_TITLE}}</h1>
-    <nav id="menu">
-      <ul>
-        <li><a href="index.php?page=Mnt-CatalogoList"><i class="fas fa-home"></i>&nbsp;Inicio</a></li>
-        {{foreach NAVIGATION}}
-            <li><a href="{{nav_url}}">{{nav_label}}</a></li>
-        {{endfor NAVIGATION}}
-        <li><a href="index.php?page=Mnt-CarritoList"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Carrito</a></li>
-        <li><a href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i>&nbsp;Salir</a></li>
-      </ul>
-    </nav>
-    {{with login}}
-    <span class="username">{{userName}} <a href="index.php?page=sec_logout"><i class="fas fa-sign-out-alt"></i></a></span>
-    {{endwith login}}
-  </header>
-  <main>
-    {{{page_content}}}
-  </main>
-  <footer>
-    <div>Todo los Derechos Reservados 2021 &copy;</div>
-  </footer>
-  {{foreach EndScripts}}
-  <script src="/{{~BASE_DIR}}/{{this}}"></script>
-  {{endfor EndScripts}}
+
+<header>
+
+  <input type="checkbox" class="menu_toggle" id="menu_toggle" />
+
+  <label for="menu_toggle" class="menu_toggle_icon">
+    <div class="hmb dgn pt-1"></div>
+    <div class="hmb hrz"></div>
+    <div class="hmb dgn pt-2"></div>
+  </label>
+
+<h1 class="site-logo">
+    <a href="index.php?page=Index">
+        <img src="/ReposteriaAna-main/uploads/Inicio/logorepo.png"
+             alt="Repostería Ana">
+    </a>
+</h1>
+  <nav id="menu">
+    <ul>
+
+      <li>
+        <a href="index.php?page=Index">
+          <i class="fas fa-home"></i>&nbsp;Inicio
+        </a>
+      </li>
+
+      <li>
+        <a href="index.php?page=Mnt-CatalogoList">
+          <i class="fas fa-store"></i>&nbsp;Catálogo
+        </a>
+      </li>
+
+      {{foreach NAVIGATION}}
+      <li>
+        <a href="{{nav_url}}">
+          {{nav_label}}
+        </a>
+      </li>
+      {{endfor NAVIGATION}}
+
+      <li>
+        <a href="index.php?page=Mnt-CarritoList">
+          <i class="fa-solid fa-cart-shopping"></i>&nbsp;Carrito
+        </a>
+      </li>
+
+      <li>
+        <a href="index.php?page=sec_logout">
+          <i class="fas fa-sign-out-alt"></i>&nbsp;Salir
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+
+  {{with login}}
+  <span class="username">
+    {{userName}}
+    <a href="index.php?page=sec_logout">
+      <i class="fas fa-sign-out-alt"></i>
+    </a>
+  </span>
+  {{endwith login}}
+
+</header>
+
+<main>
+  {{{page_content}}}
+</main>
+
+<footer>
+  <div>Todos los Derechos Reservados {{CURRENT_YEAR}} &copy;</div>
+</footer>
+
+{{foreach EndScripts}}
+<script src="/{{~BASE_DIR}}/{{this}}"></script>
+{{endfor EndScripts}}
+
 </body>
 </html>

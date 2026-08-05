@@ -7,5 +7,7 @@
             "": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "paypal/paypal-checkout-sdk": "^1.0"
+    }
 }

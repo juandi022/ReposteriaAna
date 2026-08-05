@@ -3,7 +3,7 @@
 namespace Controllers\Mnt;
 
 use Exception;
-use Controllers\PrivateController;
+use Controllers\PublicController;
 use Views\Renderer;
 use Dao\Mantenimiento\Catalogo as CatalogoDao;
 use ErrorException;
@@ -15,7 +15,7 @@ const FORM_VIEW_URI = "index.php?page=Mnt-CatalogoForm";
 const FORM_VIEW_TEMPLATE = "mnt/form_catalogo";
 const FORM_XSS_TOKEN = "catalogo_form";
 
-class CatalogoForm extends PrivateController
+class CatalogoForm extends PublicController
 {
     private string $mode = "NAS"; // Not Assigned as default
     private array  $modes = [

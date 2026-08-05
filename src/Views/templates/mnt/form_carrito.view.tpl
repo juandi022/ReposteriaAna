@@ -4,13 +4,14 @@
 
 <section class="grid">
   <div class="row">
-    <form class="col-12 col-m-8" action="index.php?page=Mnt-CarritoForm&mode={{mode}}&id_producto={{id_producto}}" method="post">
+    <form class="col-12 col-m-8" action="index.php?page=Mnt-CarritoForm&mode={{mode}}&id_producto={{id_producto}}&id_detalle_carrito={{id_detalle_carrito}}" method="post">
       <div class="flex align-center">
         <div class="col-8 row">
           <input type="hidden" name="page" value="Mnt-CarritoForm" />
           <input type="hidden" name="mode" value="{{mode}}" />
           <input type="hidden" name="xssToken" value="{{xssToken}}" />
           <input type="hidden" name="id_producto" value="{{id_producto}}" />
+          <input type="hidden" name="id_detalle_carrito" value="{{id_detalle_carrito}}" />
 
           <label class="col-3" for="nombre_producto">Producto</label>
           <input class="col-9" type="text" id="nombre_producto" value="{{nombre_producto}}" readonly />
