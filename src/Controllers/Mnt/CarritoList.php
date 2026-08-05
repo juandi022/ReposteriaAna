@@ -2,31 +2,19 @@
 
 namespace Controllers\Mnt;
 
-use Controllers\PrivateController;
-use Dao\Mantenimiento\Carrito as CarritoDao;
-use Utilities\Security;
+use Controllers\PublicController;
+use Utilities\Carrito as CarritoSession;
 use Views\Renderer;
 
-class CarritoList extends PrivateController
+class CarritoList extends PublicController
 {
     public function run(): void
     {
-        $userId = Security::getUserId();
-        $carrito = CarritoDao::getOrCreateCarrito($userId);
-        $detalle = CarritoDao::getDetalleCarrito(intval($carrito["id_carrito"] ?? 0));
-
-        $total = 0;
-        $detalle = array_map(function ($item) use (&$total) {
-            $item["subtotal"] = round(floatval($item["precio"]) * intval($item["cantidad"]), 2);
-            $total += $item["subtotal"];
-            return $item;
-        }, $detalle);
-
+        $detalle = CarritoSession::obtener();
         $viewData = [
-            "carrito" => $carrito,
             "detalle" => $detalle,
-            "total" => round($total, 2),
-            "itemsCount" => count($detalle)
+            "total" => round(CarritoSession::total(), 2),
+            "itemsCount" => CarritoSession::cantidadItems()
         ];
 
         Renderer::render("mnt/carrito", $viewData);

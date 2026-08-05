@@ -6,22 +6,22 @@ use Dao\Table;
 
 class Carrito extends Table
 {
-    public static function getCarritoActivo(int $userId): array
+    public static function getCarritoActivo(int $usercod): array
     {
-        $sqlstr = "SELECT * FROM carrito WHERE user_cod = :user_cod AND estado = 'Activo' ORDER BY id_carrito DESC LIMIT 1;";
-        $registro = self::obtenerUnRegistro($sqlstr, ["user_cod" => $userId]);
+        $sqlstr = "SELECT * FROM carrito WHERE usercod = :usercod AND estado = 'Activo' ORDER BY id_carrito DESC LIMIT 1;";
+        $registro = self::obtenerUnRegistro($sqlstr, ["usercod" => $usercod]);
         return $registro ?: [];
     }
 
-    public static function getOrCreateCarrito(int $userId): array
+    public static function getOrCreateCarrito(int $usercod): array
     {
-        $carrito = self::getCarritoActivo($userId);
+        $carrito = self::getCarritoActivo($usercod);
         if (empty($carrito)) {
             self::executeNonQuery(
-                "INSERT INTO carrito (user_cod, estado) VALUES (:user_cod, 'Activo');",
-                ["user_cod" => $userId]
+                "INSERT INTO carrito (usercod, estado) VALUES (:usercod, 'Activo');",
+                ["usercod" => $usercod]
             );
-            $carrito = self::getCarritoActivo($userId);
+            $carrito = self::getCarritoActivo($usercod);
         }
         return $carrito;
     }

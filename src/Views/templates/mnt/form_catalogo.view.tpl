@@ -56,7 +56,7 @@
           {{endif editable}}
           {{ifnot editable}}
           {{with producto}}
-          <a class="btn" href="index.php?page=Checkout-Checkout&id_producto={{id_producto}}"><i class="fa-solid fa-cart-shopping"></i>&nbsp;Comprar</a>
+          <a class="btn" href="index.php?page=Mnt-CarritoForm&mode=INS&id_producto={{id_producto}}"><i class="fa-solid fa-cart-plus"></i>&nbsp;Agregar al carrito</a>
           {{endwith producto}}
           {{endifnot editable}}
           <a href="index.php?page=Mnt-CatalogoList">Volver</a>
