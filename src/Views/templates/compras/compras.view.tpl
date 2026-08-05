@@ -36,7 +36,7 @@
                 <th><a href="index.php?page=Compras-ComprasList&orderBy=fecha">Fecha</a></th>
                 <th><a href="index.php?page=Compras-ComprasList&orderBy=total">Total</a></th>
                 <th><a href="index.php?page=Compras-ComprasList&orderBy=estado">Estado</a></th>
-                <th><a href="index.php?page=Compras-CompraForm&mode=INS">Crear</a></th>
+                <th><a href="index.php?page=Compras-CompraForm&mode=INS"><i class="fas fa-plus"></i>&nbsp;Crear</a></th>
             </tr>
         </thead>
         <tbody>
@@ -49,9 +49,9 @@
                 <td>L {{total}}</td>
                 <td>{{estado}}</td>
                 <td>
-                    <a href="index.php?page=Compras-CompraForm&mode=DSP&id_compra={{id_compra}}">Mostrar</a><br/>
-                    <a href="index.php?page=Compras-CompraForm&mode=UPD&id_compra={{id_compra}}">Editar</a><br/>
-                    <a href="index.php?page=Compras-CompraForm&mode=DEL&id_compra={{id_compra}}">Borrar</a>
+                    <a href="index.php?page=Compras-CompraForm&mode=DSP&id_compra={{id_compra}}"><i class="fas fa-eye"></i>&nbsp;Mostrar</a><br/>
+                    <a href="index.php?page=Compras-CompraForm&mode=UPD&id_compra={{id_compra}}"><i class="fas fa-pen-to-square"></i>&nbsp;Editar</a><br/>
+                    <a href="index.php?page=Compras-CompraForm&mode=DEL&id_compra={{id_compra}}"><i class="fas fa-trash"></i>&nbsp;Borrar</a>
                 </td>
             </tr>
             {{endfor compras}}
