@@ -33,8 +33,7 @@
 
 <h1 class="site-logo">
     <a href="index.php?page=Index">
-        <img src="/ReposteriaAna-main/uploads/Inicio/logorepo.png"
-             alt="Repostería Ana">
+        <img src="/{{BASE_DIR}}/uploads/Inicio/logorepo.png" alt="Repostería Ana">
     </a>
 </h1>
   <nav id="menu">

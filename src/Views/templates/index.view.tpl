@@ -33,7 +33,7 @@
 
     <div>
 
-        <img src="/ReposteriaAna-main/uploads/Inicio/logorepo.png" alt="Repostería Ana">
+        <img src="/{{BASE_DIR}}/uploads/Inicio/logorepo.png" alt="Repostería Ana">
 
     </div>
 

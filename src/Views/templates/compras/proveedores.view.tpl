@@ -34,7 +34,7 @@
                 <th>Teléfono</th>
                 <th>Correo</th>
                 <th><a href="index.php?page=Compras-ProveedoresList&orderBy=estado">Estado</a></th>
-                <th><a href="index.php?page=Compras-ProveedorForm&mode=INS">Crear</a></th>
+                <th><a href="index.php?page=Compras-ProveedorForm&mode=INS"><i class="fas fa-plus"></i>&nbsp;Crear</a></th>
             </tr>
         </thead>
         <tbody>
@@ -47,9 +47,9 @@
                 <td>{{correo}}</td>
                 <td>{{estado}}</td>
                 <td>
-                    <a href="index.php?page=Compras-ProveedorForm&mode=DSP&id_proveedor={{id_proveedor}}">Mostrar</a><br/>
-                    <a href="index.php?page=Compras-ProveedorForm&mode=UPD&id_proveedor={{id_proveedor}}">Editar</a><br/>
-                    <a href="index.php?page=Compras-ProveedorForm&mode=DEL&id_proveedor={{id_proveedor}}">Borrar</a>
+                    <a href="index.php?page=Compras-ProveedorForm&mode=DSP&id_proveedor={{id_proveedor}}"><i class="fas fa-eye"></i>&nbsp;Mostrar</a><br/>
+                    <a href="index.php?page=Compras-ProveedorForm&mode=UPD&id_proveedor={{id_proveedor}}"><i class="fas fa-pen-to-square"></i>&nbsp;Editar</a><br/>
+                    <a href="index.php?page=Compras-ProveedorForm&mode=DEL&id_proveedor={{id_proveedor}}"><i class="fas fa-trash"></i>&nbsp;Borrar</a>
                 </td>
             </tr>
             {{endfor proveedores}}

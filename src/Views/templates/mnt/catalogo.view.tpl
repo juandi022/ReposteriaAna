@@ -12,7 +12,11 @@
                 <th>Precio</th>
                 <th>Stock</th>
                 <th>Imagen</th>
-                <th>Acciones</th>
+                <th>
+                    {{if isAdmin}}
+                    <a href="index.php?page=Mnt-CatalogoForm&mode=INS">Crear</a>
+                    {{endif isAdmin}}
+                </th>
             </tr>
         </thead>
 
@@ -32,12 +36,7 @@
 
                 <td>
                     {{if imagen}}
-                    <img
-                        src="uploads/catalogo/{{imagen}}"
-                        alt="{{nombre}}"
-                        width="60"
-                        height="60"
-                        style="object-fit:cover;border-radius:6px;">
+                    <img src="uploads/catalogo/{{imagen}}" alt="{{nombre}}" width="60" height="60" style="object-fit:cover;border-radius:6px;">
                     {{endif imagen}}
 
                     {{ifnot imagen}}
@@ -45,30 +44,19 @@
                     {{endifnot imagen}}
                 </td>
 
-                <td class="acciones">
-
-    <div class="acciones-botones">
-
-        <a class="btn-carrito"
-           href="index.php?page=Mnt-CarritoForm&mode=INS&id_producto={{id_producto}}">
-            <i class="fas fa-cart-plus"></i> Comprar
-        </a>
-
-        {{if isAdmin}}
-
-        <a href="index.php?page=Mnt-CatalogoForm&mode=UPD&id_producto={{id_producto}}">
-            <i class="fas fa-pen-to-square"></i> Editar
-        </a>
-
-        <a href="index.php?page=Mnt-CatalogoForm&mode=DEL&id_producto={{id_producto}}">
-            <i class="fas fa-trash"></i> Borrar
-        </a>
-
-        {{endif isAdmin}}
-
-    </div>
-
-</td>
+                <td>
+                    <a href="index.php?page=Mnt-CarritoForm&mode=INS&id_producto={{id_producto}}">
+                        <i class="fas fa-cart-plus"></i>&nbsp;Comprar
+                    </a><br/>
+                    {{if ~isAdmin}}
+                    <a href="index.php?page=Mnt-CatalogoForm&mode=UPD&id_producto={{id_producto}}">
+                        <i class="fas fa-pen-to-square"></i>&nbsp;Editar
+                    </a><br/>
+                    <a href="index.php?page=Mnt-CatalogoForm&mode=DEL&id_producto={{id_producto}}">
+                        <i class="fas fa-trash"></i>&nbsp;Borrar
+                    </a>
+                    {{endif ~isAdmin}}
+                </td>
 
             </tr>
             {{endfor productos}}

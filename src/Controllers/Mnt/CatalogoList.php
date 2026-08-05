@@ -101,6 +101,10 @@ class CatalogoList extends PublicController
         \Utilities\Security::getUserId(),
         "CLI"
     );
+    $this->viewData["isAdmin"] = \Utilities\Security::isAuthorized(
+        \Utilities\Security::getUserId(),
+        "Controllers\\Mnt\\CatalogoForm"
+    );
     if ($this->orderBy !== "") {
       $orderByKey = "Order" . ucfirst($this->orderBy);
       $orderByKeyNoOrder = "OrderBy" . ucfirst($this->orderBy);

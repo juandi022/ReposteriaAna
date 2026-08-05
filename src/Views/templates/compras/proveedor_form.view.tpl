@@ -46,7 +46,7 @@
         <div class="col-12 flex align-center">
             {{if editable}}<button type="submit">Guardar</button>{{endif editable}}
             {{ifnot editable}}
-                {{if modoEliminar}}<button type="submit">Confirmar eliminación</button>{{endif modoEliminar}}
+                {{if modoEliminar}}<button type="submit"><i class="fas fa-trash"></i>&nbsp;Confirmar eliminación</button>{{endif modoEliminar}}
             {{endifnot editable}}
             <a class="btn px-4" href="index.php?page=Compras-ProveedoresList">Volver</a>
         </div>

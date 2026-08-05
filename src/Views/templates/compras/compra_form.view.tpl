@@ -45,7 +45,7 @@
 
         <div class="col-12 flex align-center">
             {{if editable}}<button type="submit" name="action" value="SAVE">Guardar</button>{{endif editable}}
-            {{if modoEliminar}}<button type="submit" name="action" value="DELETE">Confirmar eliminación</button>{{endif modoEliminar}}
+            {{if modoEliminar}}<button type="submit" name="action" value="DELETE"><i class="fas fa-trash"></i>&nbsp;Confirmar eliminación</button>{{endif modoEliminar}}
             {{if puedeConfirmar}}<button type="submit" name="action" value="CONFIRM">Confirmar y Reabastecer</button>{{endif puedeConfirmar}}
             <a class="btn px-4" href="index.php?page=Compras-ComprasList">Volver</a>
         </div>
@@ -100,7 +100,7 @@
                     <form action="index.php?page=Compras-CompraForm&mode=UPD&id_compra={{~id_compra}}" method="post">
                         <input type="hidden" name="xssToken" value="{{~xssToken}}" />
                         <input type="hidden" name="id_detalle_compra" value="{{id_detalle_compra}}" />
-                        <button type="submit" name="action" value="DEL_DETAIL">Quitar</button>
+                        <button type="submit" name="action" value="DEL_DETAIL"><i class="fas fa-trash"></i>&nbsp;Quitar</button>
                     </form>
                     {{endif ~puedeAgregarDetalle}}
                 </td>
