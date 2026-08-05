@@ -1,12 +1,12 @@
 --CARRITO
 CREATE TABLE carrito (
     id_carrito INT AUTO_INCREMENT PRIMARY KEY,
-    user_cod BIGINT NOT NULL,
+    usercod BIGINT NOT NULL,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
     estado ENUM('Activo','Comprado') DEFAULT 'Activo',
 
     CONSTRAINT fk_carrito_usuario
-        FOREIGN KEY (user_cod)
+        FOREIGN KEY (usercod)
         REFERENCES usuario(usercod)
 );
 

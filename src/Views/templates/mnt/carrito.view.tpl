@@ -22,7 +22,7 @@
                 <td>L {{precio}}</td>
                 <td>L {{subtotal}}</td>
                 <td>
-                    <a href="index.php?page=Mnt-CarritoForm&mode=DEL&id_detalle_carrito={{id_detalle_carrito}}">Eliminar</a>
+                    <a href="index.php?page=Mnt-CarritoForm&mode=DEL&id_producto={{id_producto}}">Eliminar</a>
                 </td>
             </tr>
             {{endfor detalle}}
@@ -38,6 +38,7 @@
     <p>Tu carrito está vacío.</p>
     {{endifnot detalle}}
     <p>
+        <a class="btn" href="index.php?page=Checkout-Checkout"><i class="fa-solid fa-credit-card"></i>&nbsp;Ir a pagar</a>
         <a class="btn" href="index.php?page=Mnt-CatalogoList"><i class="fa-solid fa-arrow-left"></i>&nbsp;Seguir comprando</a>
     </p>
 </section>
