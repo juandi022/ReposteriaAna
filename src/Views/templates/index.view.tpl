@@ -20,8 +20,9 @@
 
         <div class="hero-image">
 
-<img src="https://picsum.photos/700/700" alt="Pan artesanal">
-        </div>
+    <img src="/{{BASE_DIR}}/uploads/Inicio/imagen3.jpeg" alt="Repostería Ana">
+
+</div>
 
     </div>
 
