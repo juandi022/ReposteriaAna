@@ -19,6 +19,12 @@ class Nav {
                 "nav_label" => "Historial"
             );
         }
+        if (\Utilities\Security::isAuthorized($userID, "Controllers\\RolesUsuarios\\RolesUsuarios")) {
+            $tmpNAVIGATION[] = array(
+                "nav_url" => "index.php?page=RolesUsuarios_RolesUsuarios",
+                "nav_label" => "Gestionar Usuarios"
+            );
+        }
        
         \Utilities\Context::setContext("NAVIGATION", $tmpNAVIGATION);
     }
