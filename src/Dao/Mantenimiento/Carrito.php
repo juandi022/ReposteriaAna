@@ -8,8 +8,8 @@ class Carrito extends Table
 {
     public static function getCarritoActivo(int $userId): array
     {
-        $sqlstr = "SELECT * FROM carrito WHERE user_cod = :user_cod AND estado = 'Activo' ORDER BY id_carrito DESC LIMIT 1;";
-        $registro = self::obtenerUnRegistro($sqlstr, ["user_cod" => $userId]);
+        $sqlstr = "SELECT * FROM carrito WHERE usercod = :usercod AND estado = 'Activo' ORDER BY id_carrito DESC LIMIT 1;";
+        $registro = self::obtenerUnRegistro($sqlstr, ["usercod" => $userId]);
         return $registro ?: [];
     }
 
@@ -18,8 +18,8 @@ class Carrito extends Table
         $carrito = self::getCarritoActivo($userId);
         if (empty($carrito)) {
             self::executeNonQuery(
-                "INSERT INTO carrito (user_cod, estado) VALUES (:user_cod, 'Activo');",
-                ["user_cod" => $userId]
+                "INSERT INTO carrito (usercod, estado) VALUES (:usercod, 'Activo');",
+                ["usercod" => $userId]
             );
             $carrito = self::getCarritoActivo($userId);
         }
