@@ -32,3 +32,4 @@ CREATE TABLE detalle_pedido (
         FOREIGN KEY (id_producto)
         REFERENCES productos(id_producto)
 );
+
