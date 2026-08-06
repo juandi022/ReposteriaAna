@@ -2,13 +2,13 @@
 
     namespace Controllers\RolesUsuarios;
 
-    use Controllers\PublicController;
+    use Controllers\PrivateController;
     use Utilities\Context;
     use Utilities\Paging;
     use Dao\RolesUsuarios\RolesUsuarios as DaoRolesUsuarios;
     use Views\Renderer;
 
-    class RolesUsuarios extends PublicController
+    class RolesUsuarios extends PrivateController
     {
         private $partialName = "";
         private $status = "";

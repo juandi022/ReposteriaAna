@@ -2,7 +2,7 @@
 
 namespace Controllers\RolesUsuarios;
 
-use Controllers\PublicController;
+use Controllers\PrivateController;
 use Views\Renderer;
 use Dao\RolesUsuarios\RolesUsuarios as RolesUsuariosDao;
 use Dao\Roles\Roles as RolesDao;
@@ -10,7 +10,7 @@ use Dao\Usuarios\Usuarios as UsuariosDao;
 use Utilities\Site;
 use Utilities\Validators;
 
-class RolUsuario extends PublicController
+class RolUsuario extends PrivateController
 {
     private $viewData = [];
     private $mode = "DSP";
