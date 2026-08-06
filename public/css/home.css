@@ -2,7 +2,6 @@
    HOME.CSS
    Repostería Ana
 ====================================================== */
-
 *{
     box-sizing:border-box;
 }
@@ -19,7 +18,7 @@
             rgba(35,20,12,.75),
             rgba(35,20,12,.75)
         ),
-        url("https://picsum.photos/1920/1080?random=20");
+        url("/ReposteriaAna-main/uploads/Inicio/imagen4.jpeg");
 
     background-size:cover;
     background-position:center;
@@ -78,34 +77,23 @@
 }
 
 .hero-image{
-
     display:flex;
     justify-content:center;
     align-items:center;
-
 }
 
 .hero-image img{
-
     width:100%;
     max-width:600px;
     height:480px;
-
     object-fit:cover;
-
     border-radius:25px;
-
-    box-shadow:
-        0 30px 60px rgba(0,0,0,.45);
-
+    box-shadow:0 30px 60px rgba(0,0,0,.45);
     transition:.35s;
-
 }
 
 .hero-image img:hover{
-
     transform:scale(1.03);
-
 }
 
 /* ====================================================== */
