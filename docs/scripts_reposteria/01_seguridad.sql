@@ -87,6 +87,13 @@ INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Roles\\
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Roles\\Rol', 'Detalle de Roles', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuarios', 'Lista de Usuarios', 'ACT', 'FNC');
 INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Usuarios\\Usuario', 'Detalle de Roles', 'ACT', 'FNC');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Compras\\ComprasList', 'Controllers\\Compras\\ComprasList', 'ACT', 'CTR');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Compras\\CompraForm', 'Controllers\\Compras\\CompraForm', 'ACT', 'CTR');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Compras\\ProveedoresList', 'Controllers\\Compras\\ProveedoresList', 'ACT', 'CTR');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Compras\\ProveedorForm', 'Controllers\\Compras\\ProveedorForm', 'ACT', 'CTR');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Historial\\TransaccionesList', 'Controllers\\Historial\\TransaccionesList', 'ACT', 'CTR');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\Historial\\TransaccionDetalle', 'Controllers\\Historial\\TransaccionDetalle', 'ACT', 'CTR');
+INSERT INTO funciones (fncod, fndsc, fnest, fntyp) VALUES ('Controllers\\RolesUsuarios\\RolesUsuarios', 'Controllers\\RolesUsuarios\\RolesUsuarios', 'ACT', 'CTR');
 
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoList', 'ACT', '2027-08-01');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Mnt\\CatalogoForm', 'ACT', '2027-08-01');
@@ -98,6 +105,13 @@ INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'C
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Roles\\Rol', 'ACT', '2027-08-01');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuarios', 'ACT', '2027-08-01');
 INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Usuarios\\Usuario', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Compras\\ComprasList', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Compras\\CompraForm', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Compras\\ProveedoresList', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Compras\\ProveedorForm', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Historial\\TransaccionesList', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\Historial\\TransaccionDetalle', 'ACT', '2027-08-01');
+INSERT INTO funciones_roles (rolescod, fncod, fnrolest, fnexp) VALUES ('ADM', 'Controllers\\RolesUsuarios\\RolesUsuarios', 'ACT', '2027-08-01');
 
 INSERT INTO roles_usuarios (usercod, rolescod, roleuserest, roleuserfch, roleuserexp)
 VALUES (1, 'ADM', 'ACT', '2026-08-01', '2027-08-01');

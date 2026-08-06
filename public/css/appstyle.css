@@ -167,3 +167,34 @@ td.acciones a{
     gap:6px;
     margin:4px 0;
 }
+
+/* Navegación siempre visible */
+header nav{
+    position:static;
+    top:auto;
+    bottom:auto;
+    width:auto;
+    padding:0;
+    margin-left:.5rem;
+    transform:none;
+    background:transparent;
+    border-right:0;
+    box-shadow:none;
+    flex:1 1 auto;
+}
+
+header nav ul{
+    flex-direction:row;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:.25rem;
+}
+
+header ul li a,
+header ul li span{
+    padding:.75rem 1rem;
+}
+
+.menu_toggle_icon{
+    display:none;
+}

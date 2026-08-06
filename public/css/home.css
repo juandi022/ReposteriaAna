@@ -18,7 +18,7 @@
             rgba(35,20,12,.75),
             rgba(35,20,12,.75)
         ),
-        url("/ReposteriaAna-main/uploads/Inicio/imagen4.jpeg");
+        url("../../uploads/Inicio/imagen4.jpeg");
 
     background-size:cover;
     background-position:center;
